@@ -72,7 +72,7 @@ For this section of the exercise we will be using the `bigquery-public-data.aust
 	FROM T 
 	WHERE key_count > 1;
 
-	#Solution 1 using group by and having to check the count of each group
+	#Solution 2 using group by and having to check the count of each group
 	
 	SELECT unique_key, COUNT(unique_key) AS key_count
 	FROM `bigquery-public-data.austin_311.311_service_requests`
