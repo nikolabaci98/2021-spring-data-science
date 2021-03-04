@@ -19,7 +19,7 @@ For this section of the exercise we will be using the `bigquery-public-data.aust
 	FROM `bigquery-public-data.austin_311.311_service_requests`; 
 	```
 
-7. Write a query that tells us how many _distinct_ values there are in the complaint_description column.
+6. Write a query that tells us how many _distinct_ values there are in the complaint_description column.
 	``` 
 	#If we only need the count
 	SELECT COUNT(DISTINCT(complaint_description)) 
@@ -30,7 +30,7 @@ For this section of the exercise we will be using the `bigquery-public-data.aust
 	FROM `bigquery-public-data.austin_311.311_service_requests`; 
 	```
   
-8. Write a query that counts how many times each owning_department appears in the table and orders them from highest to lowest. 
+7. Write a query that counts how many times each owning_department appears in the table and orders them from highest to lowest. 
 	``` 
 	SELECT owning_department, COUNT(owning_department) AS owning_count
 	FROM `bigquery-public-data.austin_311.311_service_requests`
@@ -38,7 +38,7 @@ For this section of the exercise we will be using the `bigquery-public-data.aust
 	ORDER BY COUNT(owning_department) DESC;
 	```
 
-9. Write a query that lists the top 5 complaint_description that appear most and the amount of times they appear in this table. (hint... limit)
+8. Write a query that lists the top 5 complaint_description that appear most and the amount of times they appear in this table. (hint... limit)
 	```
 	SELECT complaint_description, COUNT(complaint_description) AS complaint_count
 	FROM `bigquery-public-data.austin_311.311_service_requests`
@@ -46,12 +46,12 @@ For this section of the exercise we will be using the `bigquery-public-data.aust
 	ORDER BY COUNT(complaint_description) DESC
 	limit 5;
 	  ```
-10. Write a query that lists and counts all the complaint_description, just for the where the owning_department is 'Animal Services Office'.
+9. Write a query that lists and counts all the complaint_description, just for the where the owning_department is 'Animal Services Office'.
 	```
 	SELECT complaint_description, COUNT(complaint_description) AS complaint_count
-    	*************FROM `bigquery-public-data.austin_311.311_service_requests`
-    	WHERE owning_department = 'Animal Services Office'
-    	GROUP BY complaint_description;
+    FROM `bigquery-public-data.austin_311.311_service_requests`
+    WHERE owning_department = 'Animal Services Office'
+    GROUP BY complaint_description;
 		
 	### Answer check
 	SELECT COUNT(owning_department)
@@ -59,7 +59,7 @@ For this section of the exercise we will be using the `bigquery-public-data.aust
    	WHERE owning_department = 'Animal Services Office'
 	```
 
-11. Write a query to check if there are any duplicate values in the unique_key column (hint.. There are two ways to do this, one is to use a temporary table for the groupby, then filter for values that have more than one count, or, using just one table but including the  `having` function). 
+10. Write a query to check if there are any duplicate values in the unique_key column (hint.. There are two ways to do this, one is to use a temporary table for the groupby, then filter for values that have more than one count, or, using just one table but including the  `having` function). 
 	```
 	#Solution 1 using a temp table (with group by) and cheking the count of each group
 	
