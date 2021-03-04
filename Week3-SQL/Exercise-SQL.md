@@ -153,9 +153,9 @@ For this section of the exercise we will be using the `bigquery-public-data.aust
 10. Which advertiser_name had the lowest average spend per ad that was at least above 0. 
 	``` 
 	WITH T AS(
-	    SELECT advertiser_name, AVG(spend_usd) AS avg_spend
-	    FROM `bigquery-public-data.google_political_ads.advertiser_weekly_spend` 
-	    GROUP BY advertiser_name
+		SELECT advertiser_name, AVG(spend_usd) AS avg_spend
+	    	FROM `bigquery-public-data.google_political_ads.advertiser_weekly_spend` 
+	    	GROUP BY advertiser_name
 	)
 	SELECT  advertiser_name, avg_spend
 	FROM T
