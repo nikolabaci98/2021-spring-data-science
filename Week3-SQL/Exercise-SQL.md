@@ -55,8 +55,8 @@ For this section of the exercise we will be using the `bigquery-public-data.aust
 		
 	### Answer check
 	SELECT COUNT(owning_department)
-    	FROM `bigquery-public-data.austin_311.311_service_requests`
-   	WHERE owning_department = 'Animal Services Office'
+	FROM `bigquery-public-data.austin_311.311_service_requests`
+	WHERE owning_department = 'Animal Services Office'
 	```
 
 10. Write a query to check if there are any duplicate values in the unique_key column (hint.. There are two ways to do this, one is to use a temporary table for the groupby, then filter for values that have more than one count, or, using just one table but including the  `having` function). 
