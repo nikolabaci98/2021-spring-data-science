@@ -105,52 +105,87 @@ For this section of the exercise we will be using the `bigquery-public-data.aust
 ### For the next section, use the  `bigquery-public-data.google_political_ads.advertiser_weekly_spend` table.
 1. Using the `advertiser_weekly_spend` table, write a query that finds the advertiser_name that spent the most in usd. 
 	```
-	[YOUR QUERY HERE]
+	SELECT advertiser_name, SUM(spend_usd) 
+	FROM `bigquery-public-data.google_political_ads.advertiser_weekly_spend` 
+	GROUP BY advertiser_name
+	ORDER BY SUM(spend_usd) DESC
+	LIMIT 1;
 	```
 2. Who was the 6th highest spender? (No need to insert query here, just type in the answer.)
 	```
-	[YOUR ANSWER HERE]
+	SENATE LEADERSHIP FUND which spent $15,040,800
 	```
 
 3. What week_start_date had the highest spend? (No need to insert query here, just type in the answer.)
 	```
-	[YOUR ANSWER HERE]
+	2020-10-18 where $10,419,100 were spent
 	```
 
 4. Using the `advertiser_weekly_spend` table, write a query that returns the sum of spend by week (using week_start_date) in usd for the month of August only. 
 	```
-	[YOUR QUERY HERE]
+	SELECT week_start_date, SUM(spend_usd) 
+	FROM `bigquery-public-data.google_political_ads.advertiser_weekly_spend` 
+	WHERE EXTRACT(MONTH FROM week_start_date) = 08
+	GROUP BY week_start_date
+	ORDER BY week_start_date DESC;
 	```
 6.  How many ads did the 'TOM STEYER 2020' campaign run? (No need to insert query here, just type in the answer.)
 	```
-	[YOUR ANSWER HERE]
+	SELECT COUNT(advertiser_name)
+	FROM `bigquery-public-data.google_political_ads.advertiser_weekly_spend` 
+	WHERE advertiser_name = 'TOM STEYER 2020';
 	```
 7. Write a query that has, in the US region only, the total spend in usd for each advertiser_name and how many ads they ran. (Hint, you're going to have to join tables for this one). 
 	```
-		[YOUR QUERY HERE]
+	#Did not join any table...
+	SELECT advertiser_name, SUM(spend_usd) AS total_spending, COUNT(advertiser_name) AS ads_count
+	FROM `bigquery-public-data.google_political_ads.advertiser_geo_spend` 
+	WHERE country = 'US'
+	GROUP BY advertiser_name 
+	ORDER BY advertiser_name;
 	```
 8. For each advertiser_name, find the average spend per ad. 
 	```
-	[YOUR QUERY HERE]
+	SELECT advertiser_name, AVG(spend_usd) AS avg_spend
+	FROM `bigquery-public-data.google_political_ads.advertiser_weekly_spend` 
+	GROUP BY advertiser_name;
 	```
 10. Which advertiser_name had the lowest average spend per ad that was at least above 0. 
 	``` 
-	[YOUR QUERY HERE]
+	WITH T AS(
+	    SELECT advertiser_name, AVG(spend_usd) AS avg_spend
+	    FROM `bigquery-public-data.google_political_ads.advertiser_weekly_spend` 
+	    GROUP BY advertiser_name
+	)
+	SELECT  advertiser_name, avg_spend
+	FROM T
+	WHERE avg_spend = (SELECT MIN(avg_spend) FROM T WHERE avg_spend > 0);
 	```
 ## For this next section, use the `new_york_citibike` datasets.
 
 1. Who went on more bike trips, Males or Females?
 	```
-	[YOUR QUERY HERE]
+	SELECT gender, COUNT(gender)
+	FROM `bigquery-public-data.new_york_citibike.citibike_trips` 
+	WHERE gender = 'male' OR gender = 'female'
+	GROUP BY gender
+	ORDER BY gender DESC 
+	LIMIT 1
 	```
 2. What was the average, shortest, and longest bike trip taken in minutes?
 	```
-	[YOUR QUERY HERE]
+	SELECT  AVG(tripduration / 60) AS avg_trip_duration, 
+		MIN(tripduration / 60) AS min_trip_duration, 
+		MAX(tripduration / 60) AS max_trip_duration
+	FROM `bigquery-public-data.new_york_citibike.citibike_trips`
 	```
 
 3. Write a query that, for every station_name, has the amount of trips that started there and the amount of trips that ended there. (Hint, use two temporary tables, one that counts the amount of starts, the other that counts the number of ends, and then join the two.) 
 	```
-	[YOUR QUERY HERE]
+	SELECT  start_station_name, COUNT(start_station_name)
+	FROM `bigquery-public-data.new_york_citibike.citibike_trips` 
+	WHERE start_station_name = end_station_name
+	GROUP BY start_station_name;
 	```
 # The next section is the Google Colab section.  
 1. Open up this [this Colab notebook](https://colab.research.google.com/drive/1kHdTtuHTPEaMH32GotVum41YVdeyzQ74?usp=sharing).
@@ -159,5 +194,5 @@ For this section of the exercise we will be using the `bigquery-public-data.aust
 4. Click the 'Share' button on the top right.  
 5. Change the permissions so anyone with link can view. 
 6. Copy the link and paste it right below this line. 
-	* YOUR LINK:  ________________________________
+	* YOUR LINK:  https://colab.research.google.com/drive/1ufeEG0H-8MF0Efpd3wdqH9QRfZzawgKC?usp=sharing
 9. Complete the two questions in the colab notebook file. 
