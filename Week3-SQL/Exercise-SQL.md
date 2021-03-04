@@ -49,7 +49,7 @@ For this section of the exercise we will be using the `bigquery-public-data.aust
 10. Write a query that lists and counts all the complaint_description, just for the where the owning_department is 'Animal Services Office'.
 	```
 	SELECT complaint_description, COUNT(complaint_description) AS complaint_count
-    	FROM `bigquery-public-data.austin_311.311_service_requests`
+    	*************FROM `bigquery-public-data.austin_311.311_service_requests`
     	WHERE owning_department = 'Animal Services Office'
     	GROUP BY complaint_description;
 		
